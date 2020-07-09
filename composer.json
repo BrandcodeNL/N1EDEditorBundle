@@ -1,0 +1,15 @@
+{
+    "name": "brandcodenl/n1ed-editor-bundle",
+    "description": "Use the N1ED editor in a Symfony form",
+    "type": "symfony-bundle",
+    "require": {
+        "symfony/form": "^3.4|^4.0|^5.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jeroen de Kok",
+            "email": "jeroen.dekok@brandcode.nl"
+        }
+    ]
+}
