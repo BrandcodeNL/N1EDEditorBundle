@@ -1,0 +1,7 @@
+services:
+    brandcodenl.n1ed.form_type:
+        class: BrandcodeNL\N1edEditorBundle\Form\Type\N1EDType
+        tags:
+            - 'form.type'
+        arguments:
+            - []

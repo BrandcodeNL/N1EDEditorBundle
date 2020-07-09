@@ -1,0 +1,31 @@
+{% block n1_ed_row %}
+    {{dump()}}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' form-control')|trim}) %}
+    <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
+
+    <script type="text/javascript">
+        window.onEditorLoaded = function() {
+            CKEDITOR.replace("{{id}}", {
+                framework: "bootstrap4",
+                bootstrap4:{
+                    include: false,
+                    includeToGlobalDoc: false,
+                    rootContains: 'rows'
+                },
+                ui: {
+                    activateBootstrapEditorOnFullScreen: true,
+                    iframePopUp:true,
+                },
+                include:{
+                    css:[
+                        '{{ asset('build/app.css') }}'
+                    ],
+                    includeCssToGlobalDoc:false,
+                },
+                urlFileManager: '/admin/media-flmngr',
+                urlFiles: '/upload/media',
+            });
+        }
+    </script>
+    <script type="text/javascript" src="https://cloud.n1ed.com/cdn/NZI1JHPU/n1ckeditor.js"></script>
+{% endblock %}

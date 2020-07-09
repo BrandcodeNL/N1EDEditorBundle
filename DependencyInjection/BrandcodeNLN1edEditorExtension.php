@@ -1,33 +1,48 @@
 <?php
+
+declare(strict_types=1);
 /*
  * This file is part of the BrandcodeNL SonataMailchimpPublisherBundle.
  * (c) BrandcodeNL
  */
-namespace BrandcodeNL\SonataMailchimpPublisherBundle\DependencyInjection;
+
+namespace BrandcodeNL\N1edEditorBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use Symfony\Bundle\FrameworkBundle\DependencyInjection\Configuration;
+use Symfony\Component\DependencyInjection\Extension\Extension;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 /*
  * This file is part of the BrandcodeNL n1edEditorBundle.
  * (c) BrandcodeNL
  */
-class BrandcodeNLSonataMailchimpPublisherExtension extends Extension
+class BrandcodeNLN1edEditorExtension extends Extension
 {
     /**
      * {@inheritdoc}
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.xml');
-        $configuration = $this->getConfiguration($configs, $container);
-        $config = $this->processConfiguration($configuration, $configs);
-        var_dump($config);die;
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('services.yaml');
 
+        $configuration = new Configuration();
+
+        $config = $this->processConfiguration($configuration, $configs);
+
+        $definition = $container->getDefinition('brandcodenl.n1ed.form_type');
+        $definition->replaceArgument(0, $config);
+
+        $this->addFormTheme($container);
+    }
+
+    private function addFormTheme(ContainerBuilder $container): void
+    {
+        $resources = $container->hasParameter('twig.form.resources') ?
+        $container->getParameter('twig.form.resources') : [];
+
+        array_unshift($resources, '@BrandcodeNLN1edEditor/Form/n1ed.html.twig');
+        $container->setParameter('twig.form.resources', $resources);
     }
 }
