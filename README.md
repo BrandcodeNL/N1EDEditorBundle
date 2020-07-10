@@ -6,5 +6,19 @@ This bundle exposes a form field that can be used to display the n1ed editor
 Sample brandcodenl_n1editor.yml
 
 ```
-brandcode_nl_n1ed_editor:
-    api_key: apiKey
+brandcode_nln1ed_editor:
+    includeEditor: true
+    apiKey: %env(resolve:N1ED_API_KEY)%
+    config:
+        framework: "bootstrap4"
+        bootstrap4: 
+            include: false
+            includeToGlobalDoc: false
+            rootContains: 'rows'        
+        ui:
+            activateBootstrapEditorOnFullScreen: true
+            iframePopUp: true        
+        include:
+            css:
+                - 'build/app.css'            
+            includeCssToGlobalDoc: false
