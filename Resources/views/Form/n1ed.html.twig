@@ -6,7 +6,6 @@
 
     <script type="text/javascript">
         var config = JSON.parse('{{config|raw}}');
-          console.log(config);
         window.onEditorLoaded = function() {
             CKEDITOR.replace("{{id}}", config);
         }
