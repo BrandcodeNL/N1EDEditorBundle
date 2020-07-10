@@ -31,6 +31,8 @@ class BrandcodeNLN1edEditorExtension extends Extension
 
         $config = $this->processConfiguration($configuration, $configs);
 
+        $config = $this->fixConfig($config);
+
         $definition = $container->getDefinition('brandcodenl.n1ed.form_type');
         $definition->replaceArgument(0, $config);
 
@@ -44,5 +46,18 @@ class BrandcodeNLN1edEditorExtension extends Extension
 
         array_unshift($resources, '@BrandcodeNLN1edEditor/Form/n1ed.html.twig');
         $container->setParameter('twig.form.resources', $resources);
+    }
+
+    private function fixConfig(array $config): array
+    {
+        if (isset($config['config']['bootstrap4']) && 0 === \count($config['config']['bootstrap4']['breakpoints'])) {
+            unset($config['config']['bootstrap4']['breakpoints']);
+        }
+
+        if (isset($config['config']['bootstrap3']) && 0 === \count($config['config']['bootstrap3']['breakpoints'])) {
+            unset($config['config']['bootstrap3']['breakpoints']);
+        }
+
+        return $config;
     }
 }
